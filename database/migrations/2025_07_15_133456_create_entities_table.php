@@ -22,8 +22,8 @@ return new class extends Migration
 
 
             $table->enum('entity', ['public', 'private']); // Se crea un campo de seleccion para el typo de entidad.
-            $table->unsignedBigInteger('administrative_unit')->nullable(); // Se urilizara para la columna  unidad administrativa
-            $table->unsignedBigInteger('producer_office')->nullable(); // Se utilizara para la columna de oficina producttora
+            $table->string('administrative_unit')->nullable(); // Se urilizara para la columna  unidad administrativa
+            $table->string('producer_office')->nullable(); // Se utilizara para la columna de oficina producttora
             $table->timestamps();
 
             $table->foreign('user_id') // Se crea una referencia de llave foranea en el atributo  'user_id'
