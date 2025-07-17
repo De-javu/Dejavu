@@ -12,9 +12,9 @@ class Role extends Model
     // Define los atributos que se pueden asignar masivamente
   protected $fillable = ['name']; // Este es al atributoto registrado en la base de datos:
 
-  public function user()// Este metodo define una relacion muchos a muchos con el modelo User
+  public function user()// Indica que un rol puede ser asignado a muchos usuarios, es una relación de muchos a muchos
   {
-    return $this->belongsToMany(User::class); //  Indica que ya podremos accerder a consultas de User.
+    return $this->belongsToMany(User::class); // Indica que ya podremos accerder a consultas de User.
   }
 
 }

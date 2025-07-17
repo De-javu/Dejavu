@@ -63,26 +63,26 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function roles() // Este metodp define una relacion de muchos a muchos con el modelo rele
+    public function roles() // Indica que un usuario puede tener muchos roles, es una relación de muchos a muchos
     {
         return $this->belongsToMany(Role::class); // Indica que ya podremos acceder a consultas de roles.
     }
 
-    public function queries() // Este metodo define una relacion de uno a muchos con el modelo query
+    public function queries() // Indica que un usuario puede tener muchas consultas, es una relación de uno a muchos
     {
-        return $this->hasMany(Queries::class); // Indica que podremos acceder a conoltas de queries
+        return $this->hasMany(Queries::class); // Indica que podremos acceder a consultas de Query
     }
 
-    public function entity() // Este metodo define una relacion de muchoco  amucho cen el modelo entites
-    {
-        return $this->hasOne(Entities::class); // Indica que el usario solo puede tener uan entidad
+    public function entity() //  Indica que el usuario solo puede tener una entidad, es una relación de uno a uno
+        {
+        return $this->hasOne(Entities::class); // Indica que el usuario solo puede tener una entidad
     }
-     public function logs() // Este metodo define una relacion de uno a muchos con el modelo logs
+     public function logs() // Indica que los usuarios pueden tener muchos logs, es una relación de uno a muchos
     {
         return $this->hasMany(Logs::class); // Indica que podremos acceder a conoltas de Logs
     }
 
-      public function documentarySeries() // Este metodo define una relacion de uno a muchos con el modelo logs
+      public function documentarySeries() // Indica que un usuario puede tener muchas series documentales, es una relación de uno a muchos
     {
         return $this->hasMany(DocumentarySeries::class); // Indica que podremos acceder a conoltas de Logs
     }

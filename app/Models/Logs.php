@@ -14,8 +14,8 @@ class Logs extends Model
         'description'
 
     ];
-     public function user() // Este metodo define una realcio de uno a muchos con el modelo User
-    {
+     public function user() // Indica que los logs pertenecen a un usuario, es una relación de uno a muchos
+   {
         return $this->belongsTo(User::class); // Indica que ya podremos acceder a consultas de user.
     }
 }

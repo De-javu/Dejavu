@@ -10,13 +10,13 @@ class Queries extends Model
     use HasFactory;
     protected $fillable = ['user_id', 'file_id', 'description'];
 
-    public function user() // Este metodp define una relacion de muchos a muchos con el modelo user
+    public function user() // Indica que las quieries pertenecen a un usuario, es una relación de uno a muchos
     {
         return $this->belongsTo(User::class); // Indica que ya podremos acceder a consultas de user.
     }
 
 
-    public function uploadFile() // Este metodo define una relacion de muchos a muchos con el modelo uploadFile
+    public function uploadFile() // indica que una query pertenece a un archivo subido, es una relación de uno a uno
     {
         return $this->belongsTo(UploadFile::class); // Indica que ya podremos acceder a consultas de Uploadfile.
     }

@@ -13,7 +13,7 @@ class DocumentarySeriesFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->sentence(3),
+            'name' => $this->faker->sentence(3), // Se crea un nombre de serie documental aleatorio
             'user_id' => null, // Se puede asignar en el seeder
             'entity_id' => null, // Se puede asignar en el seeder
             'parent_series_id' => null,

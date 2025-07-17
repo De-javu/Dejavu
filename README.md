@@ -54,3 +54,5 @@ Se crearon las primeras tres tablas , mañana continuamos con las otras tablas, 
   php artisan migrate --force
   ```
 
+
+**

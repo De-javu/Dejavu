@@ -11,9 +11,9 @@ class EntitiesSeeder extends Seeder
 {
     public function run()
     {
-            $users = User::all();
-        Entities::factory(10)->create([
-        'user_id' => $users->random()->id,
+            $users = User::all(); // Obtener todos los usuarios existentes
+        Entities::factory(10)->create([ // Crear 10 entidades
+        'user_id' => $users->random()->id,// Asignar un usuario aleatorio a cada entidad
     ]);
     }
 }
