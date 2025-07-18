@@ -11,11 +11,51 @@
                 <x-app-logo />
             </a>
 
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                </flux:navlist.group>
+     <flux:navlist variant="outline">
+        <flux:navlist.group :heading="__('Platform')" class="grid">
+                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Tus consultas') }}</flux:navlist.item>
             </flux:navlist>
+
+
+
+            {{-- Creacion de carpetas y vistas de la aplicación --}}
+            <flux:navlist.item
+                icon="files"
+                href="#"
+                :current="false"
+                wire:navigate>
+                {{ __('Archivos') }}
+            </flux:navlist.item>
+
+            {{-- Creacion de carpetas y vistas de la aplicación --}}
+            <flux:navlist.item
+                icon="file-music"
+                href="#"
+                :current="false"
+                wire:navigate>
+                {{ __('Audios') }}
+            </flux:navlist.item>
+            {{-- Creacion de carpetas y vistas de la aplicación --}}
+            <flux:navlist.item
+                icon="file-video"
+                href="#"
+                :current="false"
+                wire:navigate>
+            {{ __('Videos') }}
+            </flux:navlist.item>
+
+            {{-- Creacion de carpetas y vistas de la aplicación --}}
+            <flux:navlist.item
+                icon="file-image"
+                href="#"
+                :current="false"
+                wire:navigate>
+            {{ __('imagenes') }}
+        </flux:navlist.group>
+    </flux:navlist.item>
+
+
+
 
             <flux:spacer />
 
