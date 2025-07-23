@@ -12,7 +12,9 @@ class EntitiesController extends Controller
      */
     public function index()
     {
-        //
+
+       $entidades = entities::all();
+       return view('entidades.index', compact('entidades'));
     }
 
     /**

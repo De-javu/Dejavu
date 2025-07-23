@@ -3,7 +3,9 @@
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Models\Entities;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EntitiesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,6 +14,12 @@ Route::get('/', function () {
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+
+Route::middleware(['auth'])->prefix('entidades')->group(function(){
+    Route::get('/', [EntitiesController::class, 'index'])->name('entidades.index');
+});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

@@ -13,9 +13,22 @@
 
      <flux:navlist variant="outline">
         <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Tus consultas') }}</flux:navlist.item>
+                    <flux:navlist.item
+                     icon="home"
+                     :href="route('dashboard')"
+                     :current="request()->routeIs('dashboard')"
+                     wire:navigate>{{ __('Incio') }}
+                    </flux:navlist.item>
             </flux:navlist>
 
+ {{-- Creacion de carpetas y vistas de la aplicación --}}
+            <flux:navlist.item
+                icon="landmark"
+                :href="route('entidades.index')"
+                :current="request()->routeIs('entidades.index')"
+                wire:navigate>
+                {{ __('Entidades') }}
+            </flux:navlist.item>
 
 
             {{-- Creacion de carpetas y vistas de la aplicación --}}
