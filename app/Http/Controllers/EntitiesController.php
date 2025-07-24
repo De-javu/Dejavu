@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateEntitiesRequest;
 use App\Models\Entities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,14 +29,8 @@ class EntitiesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store( CreateEntitiesRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:entities,name',
-            'entity' => 'required|in:public,private',
-            'administrative_unit' => 'nullable|string|max:255',
-            'producer_office' => 'nullable|string|max:255',
-        ]);
 
         Entities::create([
             'name' => $request->name,
@@ -45,8 +40,11 @@ class EntitiesController extends Controller
             'producer_office' => $request->producer_office,
         ]);
 
+
+
         return redirect()->route('entidades.index')->with('success', 'Entidad creada exitosamente.');
     }
+
 
     /**
      * Display the specified resource.

@@ -10,7 +10,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Crea 10 usuarios de ejemplo
-        User::factory(10)->create();
+        User::factory(5)->create();
 
         User::factory()->create([
             'name' => 'Admin User',

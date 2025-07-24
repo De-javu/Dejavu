@@ -9,6 +9,8 @@ class EntidadesLista extends Component
     public $modalAbierto = false;
     public $entidades;
 
+    
+
     public function mount($entidades)
     {
         // Recibe las entidades desde el controlador

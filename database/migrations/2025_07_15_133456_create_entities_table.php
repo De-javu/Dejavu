@@ -15,15 +15,14 @@ return new class extends Migration
     {
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
-            $table->string('name') // ¿Se utlizara un string de gran tamaño para el 'nombre'
-            ->unique(); // Sera un campo con nombre unico
+            $table->string('name'); // ¿Se utlizara un string de gran tamaño para el 'nombre'
 
             $table->unsignedBigInteger('user_id'); //se almacenara el id de la tabla user
 
 
             $table->enum('entity', ['public', 'private']); // Se crea un campo de seleccion para el typo de entidad.
-            $table->string('administrative_unit')->nullable(); // Se urilizara para la columna  unidad administrativa
-            $table->string('producer_office')->nullable(); // Se utilizara para la columna de oficina producttora
+            $table->enum('administrative_unit', ['Secretaría de Educación', 'Secretaría de Salud','Dirección General',]); // Se urilizara para la columna  unidad administrativa
+            $table->enum('producer_office', ['Subsecretaría de Planeación Educativa', 'Gestión de Servicios de Salud', 'Talento Humano']); // Se utilizara para la columna de oficina producttora
             $table->timestamps();
 
             $table->foreign('user_id') // Se crea una referencia de llave foranea en el atributo  'user_id'

@@ -4,11 +4,14 @@
         {{('Lista de Entidades')}}
     </h1>
 
-    <div class="flex justify-end">
-        <flux:button wire:click="abrirModal" variant="primary" color="green">
-            {{('Crear Entidad')}}
+<div class="flex justify-end">
+    {{-- TRIGGER DEL MODAL FLUX --}}
+    <flux:modal.trigger name="crear-entidad">
+        <flux:button variant="primary" color="green">
+            Crear Entidad
         </flux:button>
-    </div>
+    </flux:modal.trigger>
+</div>
 
 
 
@@ -47,8 +50,5 @@
     </table>
  </div>
 
- {{-- Modal para crear entidad --}}
- @if($modalAbierto)
-    @include('components.entidades-modal')
- @endif
-</div>
+{{-- E incluir el modal al final --}}
+@include('components.entidades-modal')
