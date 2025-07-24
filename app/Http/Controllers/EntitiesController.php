@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\entities;
+use App\Models\Entities;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EntitiesController extends Controller
 {
@@ -12,8 +13,7 @@ class EntitiesController extends Controller
      */
     public function index()
     {
-
-       $entidades = entities::all();
+       $entidades = Entities::with('user')->get();
        return view('entidades.index', compact('entidades'));
     }
 
@@ -22,7 +22,7 @@ class EntitiesController extends Controller
      */
     public function create()
     {
-        //
+        return view('entidades.create');
     }
 
     /**
@@ -30,7 +30,22 @@ class EntitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:entities,name',
+            'entity' => 'required|in:public,private',
+            'administrative_unit' => 'nullable|string|max:255',
+            'producer_office' => 'nullable|string|max:255',
+        ]);
+
+        Entities::create([
+            'name' => $request->name,
+            'user_id' => Auth::id(),
+            'entity' => $request->entity,
+            'administrative_unit' => $request->administrative_unit,
+            'producer_office' => $request->producer_office,
+        ]);
+
+        return redirect()->route('entidades.index')->with('success', 'Entidad creada exitosamente.');
     }
 
     /**

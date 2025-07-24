@@ -18,6 +18,7 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->prefix('entidades')->group(function(){
     Route::get('/', [EntitiesController::class, 'index'])->name('entidades.index');
+    Route::post('/', [EntitiesController::class, 'store'])->name('entidades.store');
 });
 
 
