@@ -19,7 +19,7 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function(){
    Route::resource('entidades', EntitiesController::class);
 });
-
+ 
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -30,3 +30,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+

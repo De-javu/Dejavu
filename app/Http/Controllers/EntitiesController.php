@@ -6,6 +6,7 @@ use App\Http\Requests\CreateEntitiesRequest;
 use App\Models\Entities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Volt\Actions\ReturnPaginationView;
 
 class EntitiesController extends Controller
 {
@@ -32,7 +33,7 @@ class EntitiesController extends Controller
     public function store( CreateEntitiesRequest $request)
     {
 
-        Entities::create([
+        Entities::create([ // Crear una nueva entidad con los datos validados
             'name' => $request->name,
             'user_id' => Auth::id(),
             'entity' => $request->entity,
@@ -65,16 +66,38 @@ class EntitiesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, entities $entities)
+    public function update( CreateEntitiesRequest $request, $id)
     {
-        //
+        $entidad = Entities::find($id); // Buscar la entidad por ID, para la actualizacion
+
+        if($entidad) { // Verificar si la entidad existe, se ejecuta la actualizacion
+                $entidad->update([ // Actualizar los datos de la entidad
+                'name' => $request->name,
+                'entity' => $request->entity,
+                'administrative_unit' => $request->administrative_unit,
+                'producer_office' => $request->producer_office,
+            ]);
+
+            return redirect()->route('entidades.index')->with('success', 'entidad actualiozada exitosamente'); // Redireccionar a la lista de entidades con un mensaje de éxito
+
+        }
+        else{
+            return redirect()->route('entidades.index')->with('error', 'Entidad no encontrada'); // Redireccionar a la lista de entidades con un mensaje de error
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(entities $entities)
+    public function destroy($id)
     {
-        //
+        $entidad = Entities::findOrFail($id);
+
+        $entidad->delete();
+
+        return redirect()->route('entidades.index')->with('succes', 'Registro de identidad eliminado');
+
+
     }
 }

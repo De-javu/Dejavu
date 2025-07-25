@@ -7,7 +7,7 @@
         </div>
 
         {{-- FORMULARIO TRADICIONAL DENTRO DEL MODAL FLUX --}}
-        <form action="{{ route('entidades.store') }}" method="POST" onsubmit="return interceptarFormulario(this)">
+        <form action="{{ route('entidades.store') }}" method="POST"  onsubmit="return interceptarFormulario(this)">
             @csrf
 
             <div class="space-y-4">

@@ -37,12 +37,55 @@
             <td class="py-3 px-6">{{ $entidad->administrative_unit}}</td>
             <td class="py-3 px-6">{{ $entidad->producer_office }}</td>
             <td class="py-3 px-6 text-center">
-                <flux:button variant="primary" color="yellow" size="sm">
-                    Editar
+
+         <div class="flex gap-2">
+               {{-- Boton editar --}}
+            <flux:modal.trigger name="editar-entidad-{{ $entidad->id }}">
+                <flux:button variant="primary" color="yellow" size="sm" class="px-2 py-1">
+                <flux:icon.pencil class="w-4 h-4" />
                 </flux:button>
-                <flux:button variant="danger" size="sm">
-                    Eliminar
+            </flux:modal.trigger>
+
+              {{-- Boton eliminar --}}
+              <flux:modal.trigger name="delete-{{$entidad->id}}">
+             <flux:button variant="danger" size="sm" class="px-2 py-1 flex items-center gap-1">
+                <flux:icon.trash-2 class="w-4 h-4" />
                 </flux:button>
+            </flux:modal.trigger>
+
+
+           <form action="{{ route('entidades.destroy', $entidad->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+               <flux:modal name="delete-{{$entidad->id}}" class="min-w-[22rem]">
+                 <div class="space-y-6">
+                  <div>
+                    <flux:heading size="lg">Eliminar Registro?</flux:heading>
+
+                    <flux:text class="mt-2">
+                        <p>Estas seguro de eliminar el registro de la entidad.</p>
+                    </flux:text>
+                </div>
+
+                <div class="flex gap-2">
+                    <flux:spacer />
+
+                    <flux:modal.close>
+                        <flux:button variant="ghost">Cancelar</flux:button>
+                    </flux:modal.close>
+
+                    <flux:button type="submit" variant="danger">Eliminar</flux:button>
+
+
+                </div>
+              </div>
+             </flux:modal>
+            </form>
+          </div>
+
+            {{-- Incluir el modal y pasar la entidad a editar--}}
+          <x-entidades-editar-modal :entidad="$entidad" />
+
             </td>
             </tr>
             @endforeach
@@ -52,3 +95,4 @@
 
 {{-- E incluir el modal al final --}}
 @include('components.entidades-modal')
+
