@@ -6,6 +6,7 @@ use App\Livewire\Settings\Profile;
 use App\Models\Entities;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntitiesController;
+use App\Http\Controllers\DocumentarySeriesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,8 +19,9 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function(){
    Route::resource('entidades', EntitiesController::class);
+   Route::resource('series_documentales',DocumentarySeriesController::class);
 });
- 
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

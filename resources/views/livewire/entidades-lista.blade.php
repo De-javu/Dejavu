@@ -41,15 +41,38 @@
          <div class="flex gap-2">
                {{-- Boton editar --}}
             <flux:modal.trigger name="editar-entidad-{{ $entidad->id }}">
-                <flux:button variant="primary" color="yellow" size="sm" class="px-2 py-1">
+                <flux:button variant="primary" color="yellow" size="sm" class="px-2 py-1 group ">
                 <flux:icon.pencil class="w-4 h-4" />
+                  <span
+                    class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none z-100">
+                    Editar entidad
+                  </span>
                 </flux:button>
+
             </flux:modal.trigger>
+
+              {{-- Series Documental --}}
+
+                <flux:button variant="primary"
+
+                 color="blue" size="sm" class="px-2 py-1 group "
+                 onclick="window.open('{{ route('series_documentales.index',['entidad' => $entidad->id]) }}', '_blank')">
+                <flux:icon.folder class="w-4 h-4" />
+                 <span
+                    class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none z-100">
+                     Serie Documental
+                  </span>
+                </flux:button>
+
 
               {{-- Boton eliminar --}}
               <flux:modal.trigger name="delete-{{$entidad->id}}">
-             <flux:button variant="danger" size="sm" class="px-2 py-1 flex items-center gap-1">
+             <flux:button variant="danger" size="sm" class="px-2 py-1 flex items-center gap-1 group">
                 <flux:icon.trash-2 class="w-4 h-4" />
+                 <span
+                    class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none z-100">
+                    Eliminar
+                  </span>
                 </flux:button>
             </flux:modal.trigger>
 
@@ -81,7 +104,10 @@
               </div>
              </flux:modal>
             </form>
-          </div>
+
+
+
+
 
             {{-- Incluir el modal y pasar la entidad a editar--}}
           <x-entidades-editar-modal :entidad="$entidad" />
@@ -93,6 +119,6 @@
     </table>
  </div>
 
-{{-- E incluir el modal al final --}}
+{{-- incluir el modal al final --}}
 @include('components.entidades-modal')
 

@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Dashboard')">
+<x-layouts.app :title="__('Entidades')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         {{-- Mensaje de éxito --}}
         @if (session('success'))

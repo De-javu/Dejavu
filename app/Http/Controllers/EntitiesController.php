@@ -15,8 +15,8 @@ class EntitiesController extends Controller
      */
     public function index()
     {
-       $entidades = Entities::with('user')->get();
-       return view('entidades.index', compact('entidades'));
+       $entidades = Entities::with('user')->get(); // obtener todas las entidades con la relación de usuario
+       return view('entidades.index', compact('entidades')); // Pasar las entidades a la vista
     }
 
     /**
@@ -36,9 +36,8 @@ class EntitiesController extends Controller
         Entities::create([ // Crear una nueva entidad con los datos validados
             'name' => $request->name,
             'user_id' => Auth::id(),
-            'entity' => $request->entity,
-            'administrative_unit' => $request->administrative_unit,
-            'producer_office' => $request->producer_office,
+            
+
         ]);
 
 
