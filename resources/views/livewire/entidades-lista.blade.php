@@ -48,7 +48,6 @@
                     Editar entidad
                   </span>
                 </flux:button>
-
             </flux:modal.trigger>
 
               {{-- Series Documental --}}

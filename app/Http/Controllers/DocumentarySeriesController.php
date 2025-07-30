@@ -21,17 +21,14 @@ public function index(Request $request)
     $entidadId = $request->query('entidad'); // Esto es lo que llega del formualario, se debe capturasr asi pata optener tods los datos
 
     if ($entidadId) {
-        // Obtener la entidad completa
         $entidad = Entities::find($entidadId);
-
-        // Filtrar series documentales por la entidad específica
-        $series = DocumentarySeries::with('entity')->where('entity_id', $entidadId)->get();
+        $series = DocumentarySeries::with('entity')->where('entity_id', $entidadId)->get(); // Filtrar series documentales por la entidad específica
     } else {
         $entidad = null;
         $series = DocumentarySeries::with('entity')->get(); // obtener todas las series documentales si no se especifica una entidad
     }
 
-    return view('series_documentales.index', compact('series', 'entidad')); // retorna la vista con las series documentales y la entidad
+    return view('series_documentales.index', compact('series', 'entidad'));
 }
 
     /**
@@ -47,21 +44,19 @@ public function index(Request $request)
      */
     public function store(CrearSerieDocumental  $request)
     {
-
-
         //dd('Datos recibidos:', $request->all()); // Debug: Verifica los datos recibidos
 
      DocumentarySeries::create([ // Crear una nueva entidad con los datos validados
             'name' => $request->name,
             'user_id' => Auth::id(), // Asignar el ID del usuario autenticado
-            'entity_id' => $request->entity_id, // ← Este campo es obligatorio
+            'entity_id' => $request->entity_id, //  Este campo es obligatorio,pasarlo por que la tabla asi lo exige
 
         ]);
 
        // dd('Antes de redirigir'); // Temporal para debug
 
         return redirect()->route('series_documentales.index', ['entidad' => $request->entity_id])
-            ->with('success', 'serie creada con exito . ');
+                         ->with('success', 'serie creada con exito . ');
 
       }
 
@@ -84,16 +79,29 @@ public function index(Request $request)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DocumentarySeries $documentarySeries)
+    public function update(CrearSerieDocumental  $request,$id)
     {
-        //
+        $actualizar = DocumentarySeries::find($id);
+        if($actualizar){
+            $actualizar->update($request->validated());
+            return redirect()->route('series_documentales.index', ['entidad' => $request->entity_id])
+                         ->with('success', 'serie creada con exito . ');
+
+        }else{
+              return redirect()->route('series_documentales.index',['entidad' => $request->entity_id])->with('error', 'Entidad no encontrada');
+    }        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DocumentarySeries $documentarySeries)
-    {
-        //
-    }
+public function destroy($id)
+        {
+            $serie_documental = DocumentarySeries::findOrFail($id);
+            $entityId = $serie_documental->entity_id; // Guarda el id antes de eliminar
+            $serie_documental->delete();
+
+            return redirect()->route('series_documentales.index', ['entidad' => $entityId])
+                            ->with('success', 'Registro de serie documental eliminado');
+        }
 }

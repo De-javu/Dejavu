@@ -24,7 +24,7 @@ class EntitiesController extends Controller
      */
     public function create()
     {
-        return view('entidades.create');
+        //return view('entidades.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class EntitiesController extends Controller
         Entities::create([ // Crear una nueva entidad con los datos validados
             'name' => $request->name,
             'user_id' => Auth::id(),
-            
+
 
         ]);
 
@@ -91,7 +91,7 @@ class EntitiesController extends Controller
      */
     public function destroy($id)
     {
-        $entidad = Entities::findOrFail($id);
+        $entidad = Entities::findOrFail($id); // Buscar la entidad por ID, si no existe lanzará una excepción
 
         $entidad->delete();
 

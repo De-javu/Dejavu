@@ -1,27 +1,39 @@
 <div>
   <div class="space-y-6">
         <div>
-            <flux:heading size="lg">Formualrio para crear serie docoumental</flux:heading>
+            <flux:heading size="lg">
+                {{$editar  && $serie ? 'Editar Serie  Documental' : 'Crear serie documenetal' }}
+            </flux:heading>
             <flux:text class="mt-2">Serie documnetal.</flux:text>
         </div>
      {{-- FORMULARIO TRADICIONAL DENTRO DEL MODAL FLUX --}}
         <form
-        action="{{ route('series_documentales.store') }}"
+        action=" {{ $editar && $serie ? route('series_documentales.update', $serie->id) : route('series_documentales.store') }}"
         method="POST">
             @csrf
+             @if($editar && $serie)
+             @method('PUT')
+            @endif
             <div class="space-y-4">
                 {{-- Campo nombre --}}
                 <flux:input
                     name="name"
                     label="Nombre serie docuemental"
-                    placeholder="Serie"
+                    placeholder="Nombre "
                     value="{{ old('name') }}"
                     required/>
 
-                @if($entidad)
-                    <strong>Entidad:</strong> {{ $entidad->name }}
-                    <input type="hidden" name="entity_id" value="{{$entidad->id}}">
-                @endif
+                    <div class="grid">
+                        @if($editar && $serie)
+                        <strong>Serie Documental:
+                        </strong> {{ $serie->name }}                 
+                        @endif
+
+                        @if($entidad )
+                        <strong>Entidad:</strong> {{ $entidad->name }}
+                        <input type="hidden" name="entity_id" value="{{$entidad->id}}">
+                        @endif
+                    </div>
 
              </div>
             {{-- Botones con la lógica de Flux --}}
@@ -30,9 +42,10 @@
                 <flux:modal.close>
                     <flux:button variant="ghost">Cancelar</flux:button>
                 </flux:modal.close>
-                <flux:button type="submit" variant="primary">Crear Serie</flux:button>
+                <flux:button type="submit" variant="primary">
+                    {{$editar && $serie ? 'Actualizar' : 'Crear' }}
+                </flux:button>
             </div>
         </form>
-
     </div>
 
