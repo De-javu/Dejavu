@@ -16,30 +16,42 @@ class CreateEntitiesRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     *
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-public function rules(): array
+public function rules(): array // Se encarga de definir las reglas de validación para la solicitud de creación de entidades
     {
         $rules = [
             'name' => [
                 'required',
                 'string',
                 'max:255',
+                // Validación única compuesta con condiciones adicionales a la base de datos
                 Rule::unique('entities')->where(function ($query) {
                     return $query->where('entity', $this->entity)
                                ->where('administrative_unit', $this->administrative_unit)
                                ->where('producer_office', $this->producer_office);
-                }),
+
+                })
+                     // Se encarda de validar si, se edita una entidad existente, ignorando el ID actual
+                                ->ignore($this->route('entidade')),
+
+
             ],
+
+            // Validación del tipo de entidad
             'entity' => 'required|in:public,private,mixta',
+
+            // Validación de la unidad administrativa y oficina productora
             'administrative_unit' => [
                 'required',
                 'string',
                 'max:255',
-                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-,\.]+$/' // Solo letras y espacios (nombres de dependencias)
+                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-,\.]+$/' // Solo letras y espacios (nombres de dependencias,-.)
             ],
+
+            // Validación de la oficina productora
             'producer_office' => [
                 'required',
                 'string',
@@ -47,11 +59,6 @@ public function rules(): array
                 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-,\.]+$/' // Solo letras y espacios
             ],
         ];
-
-        // Si estamos editando, excluir el registro actual
-        if ($this->route('entidade')) {
-            $rules['name'][3] = $rules['name'][3]->ignore($this->route('entidade'));
-        }
 
         return $rules;
     }

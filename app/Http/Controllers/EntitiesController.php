@@ -37,8 +37,8 @@ class EntitiesController extends Controller
             'name' => $request->name,
             'user_id' => Auth::id(),
             'entity' => $request->entity,
-            'administrative_unit' => $request->administrative_unit,  // ← NUEVO CAMPO
-            'producer_office' => $request->producer_office,         // ← NUEVO CAMPO
+            'administrative_unit' => $request->administrative_unit,
+            'producer_office' => $request->producer_office,
 
 
         ]);
@@ -98,8 +98,7 @@ class EntitiesController extends Controller
 
         $entidad->delete();
 
-        return redirect()->route('entidades.index')->with('succes', 'Registro de identidad eliminado');
-
+        return redirect()->route('entidades.index')->with('success', 'Registro de identidad eliminado');
 
     }
 }

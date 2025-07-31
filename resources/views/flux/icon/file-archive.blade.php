@@ -4,7 +4,14 @@
     'variant' => 'outline',
 ])
 
+<?php
+// Ensure the Flux class exists in App\Helpers namespace and is autoloaded.
+// If not, create app/Helpers/Flux.php with the appropriate class definition.
+use App\Helpers\Flux;
+?>
+
 @php
+
 if ($variant === 'solid') {
     throw new \Exception('The "solid" variant is not supported in Lucide.');
 }
