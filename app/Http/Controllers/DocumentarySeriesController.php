@@ -34,9 +34,10 @@ public function index(Request $request)
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+
     }
 
     /**
@@ -63,9 +64,13 @@ public function index(Request $request)
     /**
      * Display the specified resource.
      */
-    public function show(DocumentarySeries $documentarySeries)
+    public function show(DocumentarySeries $documentarySeries, $id)
     {
-        //
+        $serie = DocumentarySeries::findOrFail($id);
+    // Aquí buscarás las sub-series cuando las tengas
+    $subSeries = []; // Por ahora vacío
+
+    return view('series_documentales.show', compact('serie', 'subSeries'));
     }
 
     /**
@@ -89,7 +94,7 @@ public function index(Request $request)
 
         }else{
               return redirect()->route('series_documentales.index',['entidad' => $request->entity_id])->with('error', 'Entidad no encontrada');
-    }        
+    }
     }
 
     /**

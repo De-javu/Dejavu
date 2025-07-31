@@ -7,6 +7,7 @@ use App\Models\Entities;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntitiesController;
 use App\Http\Controllers\DocumentarySeriesController;
+use App\Models\DocumentarySeries;
 
 Route::get('/', function () {
     return view('welcome');

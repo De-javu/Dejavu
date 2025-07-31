@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateEntitiesRequest extends FormRequest
 {
@@ -21,20 +22,63 @@ class CreateEntitiesRequest extends FormRequest
      */
 public function rules(): array
     {
-        // Temporalmente simplificar las reglas para debug
+        $rules = [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('entities')->where(function ($query) {
+                    return $query->where('entity', $this->entity)
+                               ->where('administrative_unit', $this->administrative_unit)
+                               ->where('producer_office', $this->producer_office);
+                }),
+            ],
+            'entity' => 'required|in:public,private,mixta',
+            'administrative_unit' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-,\.]+$/' // Solo letras y espacios (nombres de dependencias)
+            ],
+            'producer_office' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-,\.]+$/' // Solo letras y espacios
+            ],
+        ];
+
+        // Si estamos editando, excluir el registro actual
+        if ($this->route('entidade')) {
+            $rules['name'][3] = $rules['name'][3]->ignore($this->route('entidade'));
+        }
+
+        return $rules;
+    }
+
+    public function messages(): array
+    {
+         // Operador ternario anidado para los TRES tipos
+    $entityType = $this->entity == 'public' ? 'Pública' :
+                  ($this->entity == 'private' ? 'Privada' : 'Mixta');
         return [
-            'name' => 'required|string|max:255', // ← Quitar |unique:entities,name temporalmente
-            'entity' => 'required|string', // ← Cambiar de |in:public,private a |string
-            'administrative_unit' => 'required|string', // ← Simplificar
-            'producer_office' => 'required|string', // ← Simplificar
+
+        // Mensaje personalizado con el tipo capturado
+            'name.unique' => "⚠️ Ya existe una entidad con el nombre \"{$this->name}\" del tipo \"{$entityType}\" en la unidad \"{$this->administrative_unit}\" con oficina productora \"{$this->producer_office}\".",
+            'name.required' => 'El nombre de la entidad es obligatorio.',
+            'entity.required' => 'El tipo de entidad es obligatorio.',
+            'administrative_unit.required' => 'La unidad administrativa es obligatoria.',
+            'administrative_unit.regex' => 'La unidad administrativa solo puede contener letras y espacios.',
+            'producer_office.required' => 'La oficina productora es obligatoria.',
+            'producer_office.regex' => 'La oficina productora solo puede contener letras y espacios.',
         ];
     }
 
     // Agregar método para debug
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        dd('❌ VALIDACIÓN FALLÓ:', $validator->errors()->toArray(), 'Datos recibidos:', $this->all());
-    }
+    //protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    //{
+        //dd('❌ VALIDACIÓN FALLÓ:', $validator->errors()->toArray(), 'Datos recibidos:', $this->all());
+    //}
 
-    
+
 }

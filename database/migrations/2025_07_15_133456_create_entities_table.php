@@ -20,9 +20,17 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); //se almacenara el id de la tabla user
 
 
-            $table->enum('entity', ['public', 'private']); // Se crea un campo de seleccion para el typo de entidad.
-            $table->enum('administrative_unit', ['Secretaría de Educación', 'Secretaría de Salud','Dirección General',]); // Se urilizara para la columna  unidad administrativa
-            $table->enum('producer_office', ['Subsecretaría de Planeación Educativa', 'Gestión de Servicios de Salud', 'Talento Humano']); // Se utilizara para la columna de oficina producttora
+            $table->enum('entity', ['public', 'private', 'mixta']); // Se crea un campo de seleccion para el typo de entidad.
+            $table->string('administrative_unit', ); // Se urilizara para la columna  unidad administrativa
+            $table->string('producer_office'); // Se utilizara para la columna oficina productora
+
+            $table->unique([  // Se crea una combinacion unica de los campos para evitar duplicados
+                'name',
+                'entity',
+                'administrative_unit',
+                'producer_office'],
+          'unique_entity_combination');
+
             $table->timestamps();
 
             $table->foreign('user_id') // Se crea una referencia de llave foranea en el atributo  'user_id'

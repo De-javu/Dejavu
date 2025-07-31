@@ -21,21 +21,24 @@
                 <flux:select name="entity" label="Tipo de Entidad" required>
                     <option value="public" {{ old('entity', $entidad->entity) == 'public' ? 'selected' : '' }}>Pública</option>
                     <option value="private" {{ old('entity', $entidad->entity) == 'private' ? 'selected' : '' }}>Privada</option>
+                    <option value="mixta" {{ old('entity', $entidad->entity) == 'mixta' ? 'selected' : '' }}>Mixta</option>
                 </flux:select>
 
-                {{-- Unidad administrativa --}}
-                <flux:select name="administrative_unit" label="Unidad Administrativa" required>
-                    <option value="Secretaría de Educación" {{ old('administrative_unit', $entidad->administrative_unit) == 'Secretaría de Educación' ? 'selected' : '' }}>Secretaría de Educación</option>
-                    <option value="Secretaría de Salud" {{ old('administrative_unit', $entidad->administrative_unit) == 'Secretaría de Salud' ? 'selected' : '' }}>Secretaría de Salud</option>
-                    <option value="Dirección General" {{ old('administrative_unit', $entidad->administrative_unit) == 'Dirección General' ? 'selected' : '' }}>Dirección General</option>
-                </flux:select>
+                 <!-- Unidad Administrativa -->
+                    <flux:input
+                        name="administrative_unit"
+                        label="Unidad Administrativa"
+                        placeholder="Ej: Secretaría de Planeación Municipal"
+                        value="{{ old('administrative_unit', $entidad->administrative_unit) }}"
+                        required/>
 
-                {{-- Oficina productora --}}
-                <flux:select name="producer_office" label="Oficina Productora" required>
-                    <option value="Subsecretaría de Planeación Educativa" {{ old('producer_office', $entidad->producer_office) == 'Subsecretaría de Planeación Educativa' ? 'selected' : '' }}>Subsecretaría de Planeación Educativa</option>
-                    <option value="Gestión de Servicios de Salud" {{ old('producer_office', $entidad->producer_office) == 'Gestión de Servicios de Salud' ? 'selected' : '' }}>Gestión de Servicios de Salud</option>
-                    <option value="Talento Humano" {{ old('producer_office', $entidad->producer_office) == 'Talento Humano' ? 'selected' : '' }}>Talento Humano</option>
-                </flux:select>
+               <!-- Oficina Productora -->
+                    <flux:input
+                        name="producer_office"
+                        label="Oficina Productora"
+                        placeholder="Ej: Subsecretaría de Desarrollo Territorial"
+                        value="{{ old('producer_office', $entidad->producer_office) }}"
+                        required/>
             </div>
 
             <div class="flex mt-6">

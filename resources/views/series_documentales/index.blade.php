@@ -59,7 +59,12 @@
                 <flux:button icon:trailing="chevron-down"></flux:button>
                 <flux:menu>
                      {{-- Boton entrar --}}
-                    <flux:menu.item icon="document" kbd="⌘D">Entrar</flux:menu.item>
+                     <flux:modal.trigger name="entrar-series{{$serie->id}}"
+                     onclick="window.location.href='{{ route('series_documentales.show',$serie->id) }}'">
+                    <flux:menu.item icon="document" kbd="⌘D">
+                        Entrar
+                    </flux:menu.item>
+                     </flux:modal.trigger>
 
                     {{-- Boton editar --}}
                     <flux:modal.trigger name="editar-serie-{{$serie->id}}">

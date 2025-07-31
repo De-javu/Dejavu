@@ -36,6 +36,9 @@ class EntitiesController extends Controller
         Entities::create([ // Crear una nueva entidad con los datos validados
             'name' => $request->name,
             'user_id' => Auth::id(),
+            'entity' => $request->entity,
+            'administrative_unit' => $request->administrative_unit,  // ← NUEVO CAMPO
+            'producer_office' => $request->producer_office,         // ← NUEVO CAMPO
 
 
         ]);
@@ -77,7 +80,7 @@ class EntitiesController extends Controller
                 'producer_office' => $request->producer_office,
             ]);
 
-            return redirect()->route('entidades.index')->with('success', 'entidad actualiozada exitosamente'); // Redireccionar a la lista de entidades con un mensaje de éxito
+            return redirect()->route('entidades.index')->with('success', 'Entidad actualizada exitosamente'); // Redireccionar a la lista de entidades con un mensaje de éxito
 
         }
         else{

@@ -25,23 +25,24 @@
                     <option value="">Seleccione el tipo</option>
                     <option value="public" {{ old('entity') == 'public' ? 'selected' : '' }}>Pública</option>
                     <option value="private" {{ old('entity') == 'private' ? 'selected' : '' }}>Privada</option>
+                    <option value="mixta" {{ old('entity') == 'mixta' ? 'selected' : '' }}>Mixta</option>
                 </flux:select>
 
                 {{-- Unidad administrativa --}}
-                <flux:select name="administrative_unit" label="Unidad Administrativa" required>
-                    <option value="">Seleccione la unidad</option>
-                    <option value="Secretaría de Educación" {{ old('administrative_unit') == 'Secretaría de Educación' ? 'selected' : '' }}>Secretaría de Educación</option>
-                    <option value="Secretaría de Salud" {{ old('administrative_unit') == 'Secretaría de Salud' ? 'selected' : '' }}>Secretaría de Salud</option>
-                    <option value="Dirección General" {{ old('administrative_unit') == 'Dirección General' ? 'selected' : '' }}>Dirección General</option>
-                </flux:select>
+               <flux:input
+                    name="administrative_unit"
+                    label="Unidad Administrativa"
+                    placeholder="Ej: Secretaría de Planeación Municipal"
+                    value="{{ old('administrative_unit') }}"
+                    required/>
 
-                {{-- Oficina productora --}}
-                <flux:select name="producer_office" label="Oficina Productora" required>
-                    <option value="">Seleccione la oficina</option>
-                    <option value="Subsecretaría de Planeación Educativa" {{ old('producer_office') == 'Subsecretaría de Planeación Educativa' ? 'selected' : '' }}>Subsecretaría de Planeación Educativa</option>
-                    <option value="Gestión de Servicios de Salud" {{ old('producer_office') == 'Gestión de Servicios de Salud' ? 'selected' : '' }}>Gestión de Servicios de Salud</option>
-                    <option value="Talento Humano" {{ old('producer_office') == 'Talento Humano' ? 'selected' : '' }}>Talento Humano</option>
-                </flux:select>
+                  <!-- Oficina Productora -->
+                <flux:input
+                    name="producer_office"
+                    label="Oficina Productora"
+                    placeholder="Ej: Subsecretaría de Desarrollo Territorial"
+                    value="{{ old('producer_office') }}"
+                    required/>
             </div>
 
             {{-- Botones con la lógica de Flux --}}

@@ -14,9 +14,9 @@ class EntitiesFactory extends Factory
         return [
             'name' => $this->faker->company(), // Se crea un nombre de entidad aleatorio
             'user_id' => null, // Se puede asignar en el seeder
-            'entity' => $this->faker->randomElement(['public', 'private']), // Se asigna un tipo de entidad aleatorio
-            'administrative_unit' => $this->faker->randomElement(['Secretaría de Educación', 'Secretaría de Salud','Dirección General']), // Se asigna un tipo de entidad aleatorio
-            'producer_office' => $this->faker->randomElement(['Subsecretaría de Planeación Educativa', 'Gestión de Servicios de Salud', 'Talento Humano']), // Se asigna un tipo de entidad aleatorio
+            'entity' => $this->faker->randomElement(['public','private','mixta']), // Se asigna un tipo de entidad aleatorio
+            'administrative_unit' => $this->faker->company(), // Se asigna un tipo de entidad aleatorio
+            'producer_office' => $this->faker->company(), // Se asigna un tipo de entidad aleatorio
         ];
     }
 }
