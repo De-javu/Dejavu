@@ -3,6 +3,7 @@
     <h1 class="text-3xl font-bold text-center" >
         {{('Lista de Entidades')}}
     </h1>
+     {{---------------------- Se crean los mensajes de valiacion para el usuario  --------------------------------------------}}
 
       {{-- Mensaje de éxito --}}
         @if (session('success'))
@@ -27,7 +28,7 @@
             </div>
         @endif
 
-
+{{---------------------- Se crean boton modal  --------------------------------------------}}
 <div class="flex justify-end">
     {{-- TRIGGER DEL MODAL FLUX --}}
     <flux:modal.trigger name="crear-entidad">
@@ -37,7 +38,7 @@
     </flux:modal.trigger>
 </div>
 
-
+{{---------------------- Se crean un atabla para listar las entidades  --------------------------------------------}}
 
  </div>
  <div class="bg-dark overflow-x-auto">
@@ -143,5 +144,5 @@
  </div>
 
 {{-- incluir el modal al final --}}
-@include('components.entidades-modal')
+@include('components.entidades-crear-modal')
 
