@@ -10,7 +10,7 @@ class CreateEntitiesRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize(): bool // Se encarga de determinar si el usuario está autorizado para realizar esta solicitud
     {
         return true;
     }
@@ -27,7 +27,9 @@ public function rules(): array // Se encarga de definir las reglas de validació
                 'required',
                 'string',
                 'max:255',
-                // Validación única compuesta con condiciones adicionales a la base de datos
+                 // NOTA: Laravel ya tiene todos los campos disponibles aquí y validados para pasara a la validacion compleja
+                // $this->entity, $this->administrative_unit, etc. ya están definidos
+
                 Rule::unique('entities')->where(function ($query) {
                     return $query->where('entity', $this->entity)
                                ->where('administrative_unit', $this->administrative_unit)
