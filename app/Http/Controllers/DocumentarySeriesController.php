@@ -18,7 +18,7 @@ class DocumentarySeriesController extends Controller
 public function index(Request $request)
 {
 
-    $entidadId = $request->query('entidad'); // Esto es lo que llega del formualario, se debe capturasr asi pata optener tods los datos
+    $entidadId = $request->query('entidad'); // Esto es lo que llega del formualario, se debe capturasr asi para optener todos los datos
 
     if ($entidadId) {
         $entidad = Entities::find($entidadId);

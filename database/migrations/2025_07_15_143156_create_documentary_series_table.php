@@ -15,20 +15,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('documentary_series', function (Blueprint $table) {
-            $table->id(); // se crea el atributo que alamacenara el la llave primaria
+            $table->id(); // se crea el atributo que almacenara la llave primaria.
             $table->string('name'); // Se crea el atributo que almacenara el nombre de la 'serie_documental'
 
             $table->unsignedBigInteger('user_id'); //se crea el atributo que recogera el 'user_id'
 
-            $table->unsignedBigInteger('parent_series_id') // Se crea un atributo que alamcenara el nombre la "serie_padre"
-                  ->nullable();// Permte que una carpeta no tenga carpeta padre, dando felxibilidad a la estructura jerárquica llena la columna con null si no tiene carpeta padre
+            $table->unsignedBigInteger('parent_series_id') // Se crea un atributo que almacenara el nombre la "serie_padre"
+                  ->nullable();// Permte que una carpeta no tenga carpeta padre, dando flexibilidad a la estructura jerárquica llena la columna con null si no tiene carpeta padre
 
 
             $table->unsignedBigInteger('entity_id'); // secrea un atrubuto que almacenara el nomnbre de la entidad relacionada
             $table->timestamps();
 
-            $table->foreign('user_id')// indica que se crear una llave forania con el atrubuto 'user_id'
-                  ->references('id') // Se encragara de buscar el atributi 'id'
+            $table->foreign('user_id')// Indica que se crea una llave forania con el atrubuto 'user_id'
+                  ->references('id') // Se encargara de buscar el atributo 'id'
                   ->on('users'); // Lo buscara en la tabla 'user'
 
             $table->foreign('parent_series_id') // Se crea una llave foranea con el atrubuto 'parent_series_id'
@@ -38,7 +38,7 @@ return new class extends Migration
                   ->onUpdated('cascade');// Tendra la funcion de actulizacion en cascada.
 
             $table->foreign('entity_id') // Se crea ua llave foranea con  el atributo 'entity_id'
-                  ->references('id') // el cual se conectara con el atributo 'id'
+                  ->references('id') // El cual se conectara con el atributo 'id'
                   ->on('entities') // buscara el atrubuto en la tabla 'entities'
                   ->onDelete('cascade') // Tendra la funcion de auto eliminado en casascada
                   ->onUpdated('cascade');// Tendra la funcion de actulizacion en cascada.

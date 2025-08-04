@@ -25,7 +25,7 @@ class CrearSerieDocumental extends FormRequest
         return [
             'name' => 'required|string|max:255', // ← Quitar |unique:entities,name temporalmente
             'user_id' => 'nullable|integer|exists:users,id', // Asegurarse de que el usuario exista
-            'entity_id' => 'required|integer|exists:entities,id',
+            'entity_id' => 'required|integer|exists:entities,id', // Asegurarse de que la entidad exista
         ];
     }
 

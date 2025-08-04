@@ -2,7 +2,7 @@
   <div class="space-y-6">
         <div>
             <flux:heading size="lg">
-                {{$editar  && $serie ? 'Editar Serie  Documental' : 'Crear serie documenetal' }}
+                {{$editar  && $serie ? 'Editar Serie  Documental' : 'Crear serie documenetal' }} 
             </flux:heading>
             <flux:text class="mt-2">Serie documnetal.</flux:text>
         </div>
@@ -26,7 +26,7 @@
                     <div class="grid">
                         @if($editar && $serie)
                         <strong>Serie Documental:
-                        </strong> {{ $serie->name }}                 
+                        </strong> {{ $serie->name }}
                         @endif
 
                         @if($entidad )
