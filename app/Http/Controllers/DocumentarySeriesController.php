@@ -23,11 +23,16 @@ public function index(Request $request)
     $entidadId = $request->query('entidad'); // Esto es lo que llega del formualario, se debe capturasr asi para optener todos los datos
 
     if ($entidadId) {
-        $entidad = Entities::find($entidadId);
-        $series = DocumentarySeries::with('entity')->where('entity_id', $entidadId)->get(); // Filtrar series documentales por la entidad específica
+        $entidad = Entities::find($entidadId);                // Buscar la entidad por su ID, para conevrtir en objeto
+        $series = DocumentarySeries::with('entity')   // Cargar la entidad relacionada
+        ->where('entity_id', $entidadId)      // Filtrar por entidad
+        ->whereNull('parent_series_id')               // Solo series principales,que su padre es null
+        ->get();                                              // Filtrar series documentales por la entidad específica
     } else {
         $entidad = null;
-        $series = DocumentarySeries::with('entity')->get(); // obtener todas las series documentales si no se especifica una entidad
+        $series = DocumentarySeries::with('entity')
+        ->whereNull('parent_series_id')
+        ->get(); // obtener todas las series documentales si no se especifica una entidad
     }
 
     return view('series_documentales.index', compact('series', 'entidad'));
@@ -47,7 +52,7 @@ public function index(Request $request)
 
         ]);
 
-       dd('Antes de redirigir'); // Temporal para debug
+      //dd('Antes de redirigir'); // Temporal para debug
 
         return redirect()->route('series_documentales.index', ['entidad' => $request->entity_id])
                          ->with('success', 'serie creada con exito . ');
@@ -99,14 +104,22 @@ public function index(Request $request)
      * Remove the specified resource from storage.
      */
 public function destroy($id)
-        {
+    {
             $serie_documental = DocumentarySeries::findOrFail($id);
             $entityId = $serie_documental->entity_id; // Guarda el id antes de eliminar
-            $serie_documental->delete();
+            $hija = $serie_documental->parent_series_id;
 
-            return redirect()->route('series_documentales.index', ['entidad' => $entityId])
+            if($hija) {
+                     $serie_documental->delete();
+                     return redirect()->route('series_documentales.show', ['series_documentale' => $hija,])
                             ->with('success', 'Registro de serie documental eliminado');
-        }
+
+                } else {
+                     $serie_documental->delete();
+                         return redirect()->route('series_documentales.index', ['entidad' => $entityId])
+                                ->with('success', 'Registro de serie documental eliminado');
+    }
+}
 
 
     public function  sub_carpeta(CrearSubSeries  $request, $serie)
