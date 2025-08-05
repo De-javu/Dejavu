@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CrearSerieDocumental;
+use App\Http\Requests\CrearSubSeries;
 use Illuminate\Support\Facades\App;
 use App\Models\Entities;
 use App\Models\DocumentarySeries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DocumentarySeriesController extends Controller
 {
@@ -32,15 +34,6 @@ public function index(Request $request)
 }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
-
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(CrearSerieDocumental  $request)
@@ -54,7 +47,7 @@ public function index(Request $request)
 
         ]);
 
-       // dd('Antes de redirigir'); // Temporal para debug
+       dd('Antes de redirigir'); // Temporal para debug
 
         return redirect()->route('series_documentales.index', ['entidad' => $request->entity_id])
                          ->with('success', 'serie creada con exito . ');
@@ -64,16 +57,21 @@ public function index(Request $request)
     /**
      * Display the specified resource.
      */
-    public function show(DocumentarySeries $documentarySeries, $id)
-    {
-        $serie = DocumentarySeries::findOrFail($id);
-    // Aquí buscarás las sub-series cuando las tengas
-    $subSeries = []; // Por ahora vacío
 
-    return view('series_documentales.show', compact('serie', 'subSeries'));
+    public function show($id)  // ← Solo recibe el ID
+    {
+    $serie = DocumentarySeries::with('entity', 'children', 'user')->findOrFail($id); // Cargar la entidad y las subseries relacionadas
+
+    $entidad = $serie->entity; // Obtener la entidad asociada a la serie documental
+    $subSeries = $serie->children; // Obtener las sub-series asociadas a la serie documental accede por medio del modelo
+    $usuario = $serie->user;
+
+    return view('series_documentales.show', compact('serie', 'subSeries', 'entidad', 'usuario'));
     }
 
     /**
+
+
      * Show the form for editing the specified resource.
      */
     public function edit(DocumentarySeries $documentarySeries)
@@ -109,4 +107,28 @@ public function destroy($id)
             return redirect()->route('series_documentales.index', ['entidad' => $entityId])
                             ->with('success', 'Registro de serie documental eliminado');
         }
+
+
+    public function  sub_carpeta(CrearSubSeries  $request, $serie)
+        {
+
+             //dd('Datos recibidos:', $request->all());
+
+             // $serie ahora es el ID de la serie padre
+    DocumentarySeries::create([
+        'name' => $request->name,
+        'user_id' => Auth::id(),
+        'entity_id' => $request->entity_id, // Viene del campo oculto
+        'parent_series_id' => $serie // Este es el ID de la serie padre
+    ]);
+
+
+    return redirect()->route('series_documentales.show',  ['series_documentale' => $serie])
+                     ->with('success', 'Sub serie creada con éxito.');
+
+
+      }
+
 }
+
+

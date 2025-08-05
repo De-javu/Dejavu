@@ -28,6 +28,9 @@ class Entities extends Model
         return $this->hasMany(DocumentarySeries::class); // Indica que podremos acceder a conoltas de queries
     }
 
+
+
+
 }
 
 

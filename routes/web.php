@@ -23,6 +23,12 @@ Route::middleware(['auth'])->group(function(){
    Route::resource('series_documentales',DocumentarySeriesController::class);
 });
 
+Route::middleware(['auth'])->group(function(){
+   Route::post('sub_series/{serie}', [DocumentarySeriesController::class,'sub_carpeta'])->name('sub_carpeta');
+
+
+});
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

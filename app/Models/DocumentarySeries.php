@@ -19,12 +19,12 @@ class DocumentarySeries extends Model
 
      public function user() // Indica que una serie documental pertenece a un usuario, es una relación de uno a uno
     {
-        return $this->belongsTo(User::class); // Indica que ya podremos acceder a consultas de user.
+        return $this->belongsTo(User::class, 'user_id'); // Indica que ya podremos acceder a consultas de user.
     }
 
      public function entity()// Indica que una serie documental pertenece a una entidad, es una relación de uno a muchos
     {
-        return $this->belongsTo(Entities::class); // Indica que ya podremos acceder a consultas de entity.
+        return $this->belongsTo(Entities::class, 'entity_id'); // Indica que ya podremos acceder a consultas de entity.
     }
 
      public function parentSeries()// Indica que una serie documental puede tener una serie documental padre, es una relación de uno a muchos
@@ -34,8 +34,17 @@ class DocumentarySeries extends Model
 
     public function children() // Indica que una serie documental puede tener muchas series documentales hijas, es una relación de uno a muchos
     {
-        return $this->hasMany(DocumentarySeries::class,'parent_series_id '); // Indica que podremos acceder a consultas de series documentales hijas
+        return $this->hasMany(DocumentarySeries::class,'parent_series_id'); // Indica que podremos acceder a consultas de series documentales hijas
     }
+
+
+         public function documentary_series()
+     {
+      return $this->hasMany(DocumentarySeries::class, 'parent_series_id');
+    }
+
+
+
 }
 
 
