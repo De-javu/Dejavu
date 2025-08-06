@@ -9,11 +9,14 @@ class SubSeries extends Component
     public $serie; // Variable para almacenar la serie recibida
     public $name;
     public $entidad;
+    public $subSeries;
+        public $subSerie;
 
-    public function mount($serie, $entidad) // Método que se ejecuta al montar el componente
+    public function mount($serie, $entidad, $subSerie = null) // Método que se ejecuta al montar el componente
     {
         $this->serie = $serie;
         $this->entidad = $entidad; // ← Asigna la entidad
+        $this->$subSerie = $subSerie; // o null si no viene
     }
     public function render()
     {

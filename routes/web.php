@@ -25,7 +25,8 @@ Route::middleware(['auth'])->group(function(){
 
 Route::middleware(['auth'])->group(function(){
    Route::post('sub_series/{serie}', [DocumentarySeriesController::class,'sub_carpeta'])->name('sub_carpeta');
-   
+   Route::put('sub_series/{serie}', [DocumentarySeriesController::class,'sub_editar'])->name('sub_editar');
+
 
 
 });

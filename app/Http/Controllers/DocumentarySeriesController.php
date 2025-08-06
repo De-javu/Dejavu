@@ -65,7 +65,7 @@ public function index(Request $request)
 
     public function show($id)  // ← Solo recibe el ID
     {
-    $serie = DocumentarySeries::with('entity', 'children', 'user')->findOrFail($id); // Cargar la entidad y las subseries relacionadas
+    $serie = DocumentarySeries::with('entity', 'children', 'user', )->findOrFail($id); // Cargar la entidad y las subseries relacionadas
 
     $entidad = $serie->entity; // Obtener la entidad asociada a la serie documental
     $subSeries = $serie->children; // Obtener las sub-series asociadas a la serie documental accede por medio del modelo
@@ -93,7 +93,7 @@ public function index(Request $request)
         if($actualizar){
             $actualizar->update($request->validated());
             return redirect()->route('series_documentales.index', ['entidad' => $request->entity_id])
-                         ->with('success', 'serie creada con exito . ');
+                         ->with('success', 'serie actualizada con exito . ');
 
         }else{
               return redirect()->route('series_documentales.index',['entidad' => $request->entity_id])->with('error', 'Entidad no encontrada');
@@ -127,7 +127,6 @@ public function destroy($id)
 
              //dd('Datos recibidos:', $request->all());
 
-             // $serie ahora es el ID de la serie padre
     DocumentarySeries::create([
         'name' => $request->name,
         'user_id' => Auth::id(),
@@ -135,10 +134,28 @@ public function destroy($id)
         'parent_series_id' => $serie // Este es el ID de la serie padre
     ]);
 
-
     return redirect()->route('series_documentales.show',  ['series_documentale' => $serie])
                      ->with('success', 'Sub serie creada con éxito.');
 
+
+      }
+
+      public function sub_editar(CrearSubSeries $request, $id)
+      {
+        $actualizar = DocumentarySeries::find($id);
+
+        if($actualizar)
+        {
+                     $actualizar->update($request->validated());
+                      return redirect()->route('series_documentales.show',  ['series_documentale' => $actualizar->parent_series_id])
+                     ->with('success', 'Sub serie editada con éxito.');
+
+        }else{
+
+              return redirect()->route('series_documentales.show',  ['series_documentale' => $actualizar->parent_series_id])
+                     ->with('success', 'no fue posible actualizar.');
+
+        }
 
       }
 
