@@ -6,11 +6,11 @@ use Livewire\Component;
 
 class SubSeries extends Component
 {
-    public $serie; // Variable para almacenar la serie recibida
+    public $serie;  
     public $name;
     public $entidad;
     public $subSeries;
-        public $subSerie;
+    public $subSerie;
 
     public function mount($serie, $entidad, $subSerie = null) // Método que se ejecuta al montar el componente
     {

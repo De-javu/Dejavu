@@ -2,10 +2,10 @@
 <div>
 
         @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+           <div class="alert alert-success">
+           {{ session('success') }}
+           </div>
+        @endif
 
 
     <div class="flex justify-between mb-12">
@@ -16,7 +16,7 @@
     <div>
         <strong>Sub-serie:</strong> {{$subSerie->name}}
     </div>
-@endforeach
+    @endforeach
 
         </div>
 

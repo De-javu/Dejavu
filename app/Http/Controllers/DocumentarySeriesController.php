@@ -145,17 +145,17 @@ public function destroy($id)
         $actualizar = DocumentarySeries::find($id);
 
         if($actualizar)
-        {
+                    {
                      $actualizar->update($request->validated());
                       return redirect()->route('series_documentales.show',  ['series_documentale' => $actualizar->parent_series_id])
                      ->with('success', 'Sub serie editada con éxito.');
 
-        }else{
+                    }else{
 
-              return redirect()->route('series_documentales.show',  ['series_documentale' => $actualizar->parent_series_id])
-                     ->with('success', 'no fue posible actualizar.');
+                           return redirect()->route('series_documentales.show',  ['series_documentale' => $actualizar->parent_series_id])
+                                 ->with('success', 'no fue posible actualizar.');
 
-        }
+                         }
 
       }
 
