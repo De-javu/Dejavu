@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentarySeries;
+use App\Models\Entities;
 use App\Models\UploadFile;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,10 @@ class UploadFileController extends Controller
      */
     public function index()
     {
-        //
+        $estructura = Entities::with(['documentarySeries.children'])->get(); // Se pasa las realaicones anidadas
+
+
+        return view('dashboard', compact('estructura'));
     }
 
     /**

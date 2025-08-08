@@ -18,14 +18,14 @@ class Entities extends Model
         'producer_office'
 
     ];
-    public function user() // Indica que una entidad pertenece a un usuario, es una relación de uno uno 
+    public function user() // Indica que una entidad pertenece a un usuario, es una relación de uno uno
     {
         return $this->belongsTo(User::class); // Indica que ya podremos acceder a consultas de user.
     }
 
     public function documentarySeries() // Indica que una entidad puede tener muchas series documentales, es una relación de uno a muchos
     {
-        return $this->hasMany(DocumentarySeries::class); // Indica que podremos acceder a conoltas de queries
+        return $this->hasMany(DocumentarySeries::class, 'entity_id'); // Indica que podremos acceder a conoltas de queries
     }
 
 

@@ -41,7 +41,7 @@ public function index(Request $request)
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CrearSerieDocumental  $request)
+public function store(CrearSerieDocumental  $request)
     {
         //dd('Datos recibidos:', $request->all()); // Debug: Verifica los datos recibidos
 
@@ -103,8 +103,8 @@ public function index(Request $request)
     /**
      * Remove the specified resource from storage.
      */
-public function destroy($id)
-    {
+    public function destroy($id)
+       {
             $serie_documental = DocumentarySeries::findOrFail($id);
             $entityId = $serie_documental->entity_id; // Guarda el id antes de eliminar
             $hija = $serie_documental->parent_series_id;

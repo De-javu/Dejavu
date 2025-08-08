@@ -7,13 +7,15 @@ use App\Models\Entities;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntitiesController;
 use App\Http\Controllers\DocumentarySeriesController;
+use App\Http\Controllers\UploadFileController;
 use App\Models\DocumentarySeries;
+use App\Models\UploadFile;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', [UploadFileController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -21,6 +23,7 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function(){
    Route::resource('entidades', EntitiesController::class);
    Route::resource('series_documentales',DocumentarySeriesController::class);
+   Route::resource('upload_files',UploadFileController::class);
 });
 
 Route::middleware(['auth'])->group(function(){
