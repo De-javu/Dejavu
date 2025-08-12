@@ -23,7 +23,7 @@ Route::get('dashboard', [UploadFileController::class, 'index'])
 Route::middleware(['auth'])->group(function(){
    Route::resource('entidades', EntitiesController::class);
    Route::resource('series_documentales',DocumentarySeriesController::class);
-   Route::resource('upload_files',UploadFileController::class);
+   Route::resource('cargar_archivos',UploadFileController::class);
 });
 
 Route::middleware(['auth'])->group(function(){

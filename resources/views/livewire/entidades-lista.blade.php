@@ -53,9 +53,9 @@
                 <th class="text-center px-4 py-4 font-semibold">Accion</th>
             </tr>
         </thead>
-        <tbody class="text-white-700">
+        <tbody class="bg-white dark:bg-gray-800">
              @foreach($entidades as $entidad)
-            <tr class="border-b border-dark-200 dark:border-gray-700">
+            <tr class="border-b border-dark-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
             <td class="py-3 px-6">{{ $entidad->user->name}}</td>
             <td class="py-3 px-6">{{ $entidad->name }}</td>
             <td class="py-3 px-6">{{ $entidad->entity }}</td>
