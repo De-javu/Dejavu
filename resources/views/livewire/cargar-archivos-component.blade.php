@@ -35,16 +35,16 @@
 @if($entidadSeleccionada)
  <div class="flex flex-wrap justify-between items-center mb-2">
     <div>
-         <h1 class="text-3xl">Entidad</h1>
-         <p>{{ $entidadSeleccionada->name}}</p>
+         <h1 class="text-lg">Entidad</h1>
+         <p class="text-sm">{{ $entidadSeleccionada->name}}</p>
     </div>
     <div>
-         <h1 class="text-3xl">Unidad Administrativa</h1>
-         <p>{{$entidadSeleccionada->administrative_unit}}</p>
+         <h1 class="text-lg">Unidad Administrativa</h1>
+         <p class="text-sm">{{$entidadSeleccionada->administrative_unit}}</p>
     </div>
     <div>
-         <h1 class="text-3xl">Oficina productora</h1>
-         <p>{{$entidadSeleccionada->producer_office}}</p>
+         <h1 class="text-lg">Oficina productora</h1>
+         <p class="text-sm">{{$entidadSeleccionada->producer_office}}</p>
     </div>
 </div>
 @endif
