@@ -10,6 +10,10 @@ class CargarArchivosComponent extends Component
 public $estructura;
 public $entidad_id;
 public $serie_id;
+public $subserie_id;
+public $mostrarExtras = false ;
+public $entidadSeleccionada;
+
 
 public function mount($estructura)
 {

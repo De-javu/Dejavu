@@ -1,17 +1,19 @@
-<div class="space-y-6">
+<div class="space-y-4">
+    <h1 class="text-4xl text-center max-w-auto">
+        Carga de archivos
+    </h1>
     {{-- Selector de entidades --}}
-    <div class="w-full">
-        <label class="block text-sm font-medium mb-4 text-gray-900 dark:text-gray-100">
-            Selecciona una Entidad
-        </label>
-        <select wire:model.live="entidad_id"
-                class="w-full px-3 py-2 border border-gray-200 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
-            <option value="">Selecciona una entidad</option>
-            @foreach ($estructura as $entidad)
-                <option value="{{ $entidad->id }}">{{ $entidad->name }}</option>
-            @endforeach
-        </select>
-    </div>
+<div class="w-full">
+    <label class="block text-lg font-medium  text-gray-900 dark:text-gray-100">
+    <flux:select wire:model.live="entidad_id" class="your-custom-styles">
+        <flux:select.option value="">Selecciona una entidad</flux:select.option>
+        @foreach ($estructura as $entidad)
+            <flux:select.option value="{{ $entidad->id }}">
+               Entidad: {{ $entidad->name }}|| Unidad: {{ $entidad->administrative_unit }} || Oficina: {{ $entidad->producer_office }}
+            </flux:select.option>
+        @endforeach
+    </flux:select>
+</div>
 
     {{-- Selector de series --}}
 
@@ -28,14 +30,33 @@
                 : collect() ;
         @endphp
 
+          {{-- Visulizacion zoom de la entidad prodcutora --}}
+
+@if($entidadSeleccionada)
+ <div class="flex flex-wrap justify-between items-center mb-2">
+    <div>
+         <h1 class="text-3xl">Entidad</h1>
+         <p>{{ $entidadSeleccionada->name}}</p>
+    </div>
+    <div>
+         <h1 class="text-3xl">Unidad Administrativa</h1>
+         <p>{{$entidadSeleccionada->administrative_unit}}</p>
+    </div>
+    <div>
+         <h1 class="text-3xl">Oficina productora</h1>
+         <p>{{$entidadSeleccionada->producer_office}}</p>
+    </div>
+</div>
+@endif
+
         @if($seriesRaiz->count())
-            <select wire:model.live="serie_id"
+            <flux:select wire:model.live="serie_id"
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400">
-                <option value="">Selecciona una serie</option>
+                <flux:select.option value="">Selecciona una serie</flux:select.option>
                 @foreach ($seriesRaiz as $serie)
-                    <option value="{{ $serie->id }}">{{ $serie->name }}</option>
+                    <flux:select.option value="{{ $serie->id }}">{{ $serie->name }}</flux:select.option>
                 @endforeach
-            </select>
+            </flux:select>
         @endif
     </div>
 @endif
@@ -50,19 +71,42 @@
             @endphp
 
             @if($serieSeleccionada && $serieSeleccionada->children)
-                <select wire:model="subserie_id"
+                <flux:select wire:model.live="subserie_id"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">Selecciona una sub-serie</option>
+                    <flux:select.option value="">Selecciona una sub-serie</flux:select.option>
                     @foreach ($serieSeleccionada->children as $subserie)
-                        <option value="{{ $subserie->id }}">{{ $subserie->name }}</option>
+                        <flux:select.option value="{{ $subserie->id }}">{{ $subserie->name }}</flux:select.option>
                     @endforeach
-                </select>
+                </flux:select>
             @endif
         </div>
     @endif
     <hr>
-    
+
+    @if($entidad_id && $serie_id && !empty($subserie_id))
+
+    <div class="flex justify-center item-center  mx-auto ">
+            {{-- TRIGGER DEL MODAL FLUX PARA CREAR --}}
+            <flux:modal.trigger name="Cargar-Archivos" >
+            <flux:button variant="primary" color="green" class="w-[40%] h-12">
+                <h1 class="text-3xl">
+                    Cargar Archivos
+                </h1>
+            </flux:button>
+            </flux:modal.trigger>
+        </div>
+    @endif
+ {{-- Incluir el modal pasando las variables --}}
+    @include('components.cargar_archivos_modal', [
+        'entidad_id' => $entidad_id,
+        'serie_id' => $serie_id,
+        'subserie_id' => $subserie_id,
+        'mostrarExtras' => $mostrarExtras,
+    ])
 </div>
+
+
+
 
 
 
