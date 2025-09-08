@@ -5,7 +5,7 @@
             <flux:text class="mt-2">Complete los datos para cargar archivos</flux:text>
         </div>
 
-        <form action="{{ route('entidades.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('cargar_archivos.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             {{-- Campos ocultos con los IDs seleccionados --}}
@@ -24,20 +24,7 @@
                     type="text"
                     placeholder="Si no ingrsas Tomara el nombre original del archivo "
                     value="{{ old('name') }}"
-
                 />
-
-                <flux:input
-                    name="folio"
-                    id="paginas"
-                    label="Número de folios"
-                    type="number"
-                    placeholder="Cantidad de folios"
-                    value="{{ old('folio') }}"
-                    min="1"
-                    required
-                />
-
                 <flux:input
                     name="start_date"
                     id="fecha_inicial"
@@ -46,7 +33,6 @@
                     value="{{ old('start_date') }}"
                     required
                 />
-
                 <flux:input
                     name="end_date"
                     id="fecha_final"
@@ -55,17 +41,15 @@
                     value="{{ old('end_date') }}"
                     required
                 />
-
                 <flux:input
                  type="file"
-                 name="archivo"
+                 name="archivo[]"
                  wire:model=""
                  label="Adjuntar"
                  multiple
                 required
                   />
             </div>
-
             {{-- Botones --}}
             <div class="flex justify-end space-x-2 mt-6">
                 <flux:modal.close>

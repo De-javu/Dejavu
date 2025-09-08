@@ -23,28 +23,28 @@ public function up(): void
 
         // Campos mejorados para nomenclatura
         $table->string('original_name');     // "memorando_finanzas_20250807_03.pdf"
-        $table->string('display_name')->nullable(); // Nombre personalizado (opcional)
+        $table->string('display_name'); // Nombre personalizado (opcional)
         $table->string('extension');         // "pdf"
         $table->string('mime_type');         // "application/pdf"
-        
+
         $table->string('path'); // Se crea el atributo que almacenara la ruta
-        $table->unsignedBigInteger('folio'); // Se crea el atributo que almacenara 'la cantidad de folios'
+        $table->unsignedBigInteger('folio')->nullable(); // Se crea el atributo que almacenara 'la cantidad de folios'
         $table->unsignedBigInteger('size'); // Se crea el atributo que almacenara 'El peso del Archivo'
         $table->dateTime('start_date'); // Se crea el atributo que almacenara 'La fecha extrema inicial'
         $table->dateTime('end_date'); // Se crea el atributo que almacenara 'la fecha extrema final'
         $table->string('hash_code')->unique(); // Se crea el atributo que almacenara 'el codigo hash'
-        
+
 
         // Campos para normativa (OPCIONALES para flexibilidad)
         $table->string('trd_code')->nullable();              // "17" - Código TRD
         $table->integer('central_retention_years')->nullable(); // 5 - Años en archivo central
         $table->string('final_disposition')->nullable();     // "conservar_permanentemente", "eliminar", "seleccionar"
         $table->text('retention_notes')->nullable();         // Notas adicionales de retención
-        
-        
-        
-        $table->timestamps();      
-        
+
+
+
+        $table->timestamps();
+
         // Índice único actualizado para usar original_name
         $table->unique(['parent_series_id', 'original_name']); // indice compuesto para archivos mismo nombre diferente carpeta
 

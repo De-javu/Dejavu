@@ -83,6 +83,21 @@
     @endif
     <hr>
 
+    @if(session('archivos_guardados'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <strong>{{ session('success') }}</strong>
+        <ul class="mt-2">
+            @foreach(session('archivos_guardados') as $archivo)
+                <li>
+                    <a href="{{ $archivo['url'] }}" target="_blank" class="text-blue-600 hover:underline">
+                        📄 {{ $archivo['nombre'] }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     @if($entidad_id && $serie_id && !empty($subserie_id))
 
     <div class="flex justify-center item-center  mx-auto ">

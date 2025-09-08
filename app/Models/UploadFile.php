@@ -13,13 +13,21 @@ class UploadFile extends Model
         'documentary_series_id',
         'parent_series_id',
         'entity_id',
-        'name',
+        'original_name',
+        'display_name',
+        'extension',
+        'mime_type',
         'path',
         'folio',
         'size',
         'start_date',
         'end_date',
-        'hash_code'
+        'hash_code',
+        'trd_code',
+        'central_retention_years',
+        'final_disposition',
+        'retention_notes'
+
 
     ];
      public function queries() // Indica que un archivo de carga puede tener muchas consultas, es una relación de uno a muchos

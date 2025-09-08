@@ -38,7 +38,7 @@
     </flux:modal.trigger>
 </div>
 
-{{---------------------- Se crean un atabla para listar las entidades  --------------------------------------------}}
+{{---------------------- Se crean una tabla para listar las entidades  --------------------------------------------}}
 
  </div>
  <div class="bg-dark overflow-x-auto">
