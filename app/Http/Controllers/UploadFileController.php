@@ -51,8 +51,18 @@ public function store(CargarArchivoRequest $request)
         }
 
         try {
-            // Usa un hash temporal simple:
-            $hash = 'temp_' . uniqid() . '_' . time();
+            $nombreArchivo = $file->getClientOriginalName();
+            // U
+            $hash = hash_file('sha256', $file->getPathname());
+
+            $duplicado = UploadFile::where('hash_code', $hash)
+                         ->where('parent_series_id', $request->subserie_id)
+                          ->first();
+
+                        if ($duplicado) {
+                            $archivosError[] = "❌ Archivo duplicado: {$nombreArchivo}";
+                            continue;
+}
 
             // Obtener el nombre original del archivo
             $nombreArchivo = $file->getClientOriginalName();
@@ -97,6 +107,9 @@ public function store(CargarArchivoRequest $request)
             continue; // Pasa al siguiente archivo
         }
     }
+
+    // Antes del return final
+     error_log("DEBUG: Guardados: " . count($archivosGuardados) . ", Errores: " . count($archivosError));
 
     // Return DESPUÉS del foreach
     return redirect()->route('dashboard')->with([

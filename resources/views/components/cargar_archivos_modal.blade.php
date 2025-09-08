@@ -1,7 +1,7 @@
 <flux:modal name="Cargar-Archivos" class="w-[80%]">
     <div class="space-y-4">
         <div>
-            <flux:heading size="lg">Cargar Archivos</flux:heading>
+            <flux:heading size="lg">Cargar Archivos maximo  10 </flux:heading>
             <flux:text class="mt-2">Complete los datos para cargar archivos</flux:text>
         </div>
 
@@ -45,7 +45,7 @@
                  type="file"
                  name="archivo[]"
                  wire:model=""
-                 label="Adjuntar"
+                 label="Adjuntar archivos maximo 10 por session "
                  multiple
                 required
                   />

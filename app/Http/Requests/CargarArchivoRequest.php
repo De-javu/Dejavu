@@ -32,7 +32,7 @@ class CargarArchivoRequest extends FormRequest
             'extension' => 'nullable|string|max:10',
             'mime_type' => 'nullable|string|max:50',
             'size' => 'nullable|integer',
-            'archivo' => 'required|array',
+            'archivo' => 'required|array|max:10', // Límite de 10 archivos por carga
             'archivo.*' => 'file|mimes:jpg,jpeg,pdf,tiff,tif,mp3,mp4|max:53248', // 52,248 KB = 51 MB
 
             // Validacion para complemento documental
@@ -40,8 +40,14 @@ class CargarArchivoRequest extends FormRequest
             'central_retention_years' => 'nullable|integer|min:0',
             'final_disposition' => 'nullable|string|max:50',
             'retention_notes' => 'nullable|string',
-
-
+        ];
+    }
+    // Mensajes personalizados
+    public function messages()
+    {
+        return [
+            'archivo.max' => 'Máximo 10 archivos permitidos por carga.',
+            'archivo.*.max' => 'Cada archivo no puede superar los 50MB.',
         ];
     }
 

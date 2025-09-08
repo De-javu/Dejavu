@@ -1,6 +1,6 @@
 <div class="space-y-4">
     <h1 class="text-4xl text-center max-w-auto">
-        Carga de archivos
+        Carga de archivos Max 10 archivos
     </h1>
     {{-- Selector de entidades --}}
 <div class="w-full">
@@ -111,6 +111,38 @@
             </flux:modal.trigger>
         </div>
     @endif
+
+    {{-- Mostrar mensajes de éxito --}}
+@if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        {{ session('success') }}
+    </div>
+@endif
+
+{{-- Mostrar archivos guardados --}}
+@if(session('archivos_guardados') && count(session('archivos_guardados')) > 0)
+    <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">
+        <strong>Archivos guardados:</strong>
+        <ul>
+            @foreach(session('archivos_guardados') as $archivo)
+                <li>✅ {{ $archivo['nombre'] }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+{{-- Mostrar errores --}}
+@if(session('archivos_error') && count(session('archivos_error')) > 0)
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <strong>Archivos con problemas:</strong>
+        <ul>
+            @foreach(session('archivos_error') as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
  {{-- Incluir el modal pasando las variables --}}
     @include('components.cargar_archivos_modal', [
         'entidad_id' => $entidad_id,
