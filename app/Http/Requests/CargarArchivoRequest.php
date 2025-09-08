@@ -33,7 +33,7 @@ class CargarArchivoRequest extends FormRequest
             'mime_type' => 'nullable|string|max:50',
             'size' => 'nullable|integer',
             'archivo' => 'required|array',
-            'archivo.*' => 'file|mimes:jpg,jpeg,pdf,tiff,tif,mp3,mp4|max:50216',
+            'archivo.*' => 'file|mimes:jpg,jpeg,pdf,tiff,tif,mp3,mp4|max:53248', // 52,248 KB = 51 MB
 
             // Validacion para complemento documental
             'trd_code' => 'nullable|string|max:20',
