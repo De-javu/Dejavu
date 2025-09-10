@@ -48,11 +48,12 @@ class CargarArchivoRequest extends FormRequest
         return [
             'archivo.max' => 'Máximo 10 archivos permitidos por carga.',
             'archivo.*.max' => 'Cada archivo no puede superar los 50MB.',
+            'archivo.*.mimes' => 'Tipos permitidos: jpg, jpeg, pdf, tiff, tif, mp3, mp4.',
         ];
     }
 
-     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    /*  protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         dd('❌ VALIDACIÓN FALLÓ:', $validator->errors()->toArray(), 'Datos recibidos:', $this->all());
-    }
+    } */
 }

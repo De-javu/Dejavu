@@ -97,7 +97,11 @@ public function store(CargarArchivoRequest $request)
             $archivo->path = $path;
 
             // 6. Almacenar en base de datos
+
+   error_log("DEBUG: Intentando guardar archivo: " . json_encode($archivo->toArray()));
+// O usando Laravel:
             $archivo->save();
+            error_log("DEBUG: Archivo guardado correctamente: " . $archivo->original_name);
 
             // 7. Registrar en el array de archivos guardados para mostrar al usuario
             $archivosGuardados[] = [
@@ -119,7 +123,7 @@ public function store(CargarArchivoRequest $request)
     // Antes del return final
      error_log("DEBUG: Guardados: " . count($archivosGuardados) . ", Errores: " . count($archivosError));
 
-    // Return Despues del foreach
+    // Return Despues del foreach que envia a la vista dashboard los resultados
     return redirect()->route('dashboard')->with([
         'success' => 'Procesamiento completado',
         'archivos_guardados' => $archivosGuardados,
