@@ -19,7 +19,7 @@ class UploadFileController extends Controller
      */
   public function index()
 {
-    // Caché simple de 30 minutos para evitar cargar la estructura cada vez
+    // Caché simple de 30 minutos para evitar cargar la estructura cada vez, que se ingrese
    $estructura = Cache::remember('estructura_dashboard', 1800, function () {
        return Entities::with(['documentarySeries.children'])->get();
    });
@@ -36,29 +36,33 @@ class UploadFileController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Se encarga de procesar y almacenar los archivos subidos.
      */
 
 public function store(CargarArchivoRequest $request)
 {
+    // Se crean los arrays para almacenar resultados procesamiento
     $archivosGuardados = [];
     $archivosError = [];
 
+    // Se recorren los archivos cargados el formulario que pasaron el validation
     foreach ($request->file('archivo') as $file) {
-        // Validación ANTES del try
+
+        // filtra archivos corructos o dañados o no existentes para que no los procese el forech, continua con el siguiente
         if (!$file || !$file->isValid()) {
             continue;
         }
 
+        // Se encarga de validar y procesar si tenemos errore, lo captura en el catch sin romper el foreach
         try {
+            // Optiene el nombre original del archivo
             $nombreArchivo = $file->getClientOriginalName();
-            // U
+
+            // 4. CALCULAR hash SHA-256 para detectar duplicados
             $hash = hash_file('sha256', $file->getPathname());
 
-            $duplicado = UploadFile::where('hash_code', $hash)
-                         ->where('parent_series_id', $request->subserie_id)
-                          ->first();
-
+            // Revisar si exoiste duplicados en la atributos hash_code
+            $duplicado = UploadFile::where('hash_code', $hash)->first();
                         if ($duplicado) {
                             $archivosError[] = "❌ Archivo duplicado: {$nombreArchivo}";
                             continue;
@@ -67,6 +71,7 @@ public function store(CargarArchivoRequest $request)
             // Obtener el nombre original del archivo
             $nombreArchivo = $file->getClientOriginalName();
 
+            //Se instancia el modelo UploadFile para guardar los metadatos
             $archivo = new UploadFile();
             $archivo->user_id = Auth::id();
             $archivo->documentary_series_id = $request->serie_id;
@@ -86,22 +91,25 @@ public function store(CargarArchivoRequest $request)
             $archivo->final_disposition = $request->final_disposition;
             $archivo->retention_notes = $request->retention_notes;
 
-            // 5. ALMACENAR archivo en estructura jerárquica
+            // 5. Alamacenar archivo en estructura jerárquica
             $rutaCarpeta = "entidad_{$request->entidad_id}/serie_{$request->serie_id}/subserie_{$request->subserie_id}";
             $path = $file->store($rutaCarpeta, 'uploads');
             $archivo->path = $path;
 
-            // 6. GUARDAR en base de datos
+            // 6. Almacenar en base de datos
             $archivo->save();
 
+            // 7. Registrar en el array de archivos guardados para mostrar al usuario
             $archivosGuardados[] = [
                 'nombre' => $archivo->original_name,
                 'url' => asset('storage/uploads/' . $path),
             ];
 
-            // 8. PAUSA entre archivos para no sobrecargar
+            // 8. Pausa entre archivos para no sobrecargar
             usleep(200000); // 0.2 segundos
 
+
+           // Log para depuración
         } catch (\Exception $e) {
             $archivosError[] = "❌ " . $nombreArchivo . ": " . $e->getMessage();
             continue; // Pasa al siguiente archivo
@@ -111,7 +119,7 @@ public function store(CargarArchivoRequest $request)
     // Antes del return final
      error_log("DEBUG: Guardados: " . count($archivosGuardados) . ", Errores: " . count($archivosError));
 
-    // Return DESPUÉS del foreach
+    // Return Despues del foreach
     return redirect()->route('dashboard')->with([
         'success' => 'Procesamiento completado',
         'archivos_guardados' => $archivosGuardados,
