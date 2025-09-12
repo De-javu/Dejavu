@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function(){
    Route::put('sub_series/{serie}', [DocumentarySeriesController::class,'sub_editar'])->name('sub_editar');
 
 
-   Route::get('/archivos/{type}', [UploadFileController::class, 'show']);
+   Route::get('/archivos/{type}', [UploadFileController::class, 'show'])->name('archivos');
 
 
 

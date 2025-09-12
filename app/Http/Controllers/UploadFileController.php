@@ -133,7 +133,11 @@ public function store(CargarArchivoRequest $request)
      */
     public function show($type)
     {
-        $archivos = UploadFile::where('extension', $type);
+        $archivos = UploadFile::with('documentarySerie','parentSeries')
+                              ->where('extension', $type)
+                              ->orderBy('id')
+                              ->paginate(5);
+                              
 
         if (in_array($type, ['pdf'])) {
                  $type ='archivo';
@@ -144,6 +148,8 @@ public function store(CargarArchivoRequest $request)
         }elseif (in_array($type, ['jpg','jpeg','tiff','tif'])) {
                  $type = 'imagen';
         }
+
+
          return view("archivos.$type", compact('archivos'));
 
     }

@@ -38,10 +38,15 @@ class DocumentarySeries extends Model
     }
 
 
-         public function documentary_series()
-     {
-      return $this->hasMany(DocumentarySeries::class, 'parent_series_id');
-    }
+        public function documentary_series()
+        {
+             return $this->hasMany(DocumentarySeries::class, 'parent_series_id');
+        }
+
+         public function uploadFiles()
+        {
+            return $this->hasMany(UploadFile::class, 'documentary_series_id');
+        }
 
 
 

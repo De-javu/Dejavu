@@ -34,8 +34,8 @@
             {{-- Creacion de carpetas y vistas de la aplicación --}}
             <flux:navlist.item
                 icon="files"
-                href="#"
-                :current="false"
+                :href="route('archivos', ['type' => 'pdf'])"
+                :current="request()->routeIs('archivos')"
                 wire:navigate>
                 {{ __('Archivos') }}
             </flux:navlist.item>
@@ -43,16 +43,16 @@
             {{-- Creacion de carpetas y vistas de la aplicación --}}
             <flux:navlist.item
                 icon="file-music"
-                href="#"
-                :current="false"
+                :href="route('archivos', ['type' => 'mp3'])"
+                :current="request()->routeIs('Audios')"
                 wire:navigate>
                 {{ __('Audios') }}
             </flux:navlist.item>
             {{-- Creacion de carpetas y vistas de la aplicación --}}
             <flux:navlist.item
                 icon="file-video"
-                href="#"
-                :current="false"
+                   :href="route('archivos', ['type' => 'mp4'])"
+                :current="request()->routeIs('Videos')"
                 wire:navigate>
             {{ __('Videos') }}
             </flux:navlist.item>
@@ -60,8 +60,8 @@
             {{-- Creacion de carpetas y vistas de la aplicación --}}
             <flux:navlist.item
                 icon="file-image"
-                href="#"
-                :current="false"
+                :href="route('archivos', ['type' => 'jpg'], ['type' => 'jpeg'], ['type' => 'tiff'], ['type' => 'tif'])"
+                :current="request()->routeIs('Imagenes')"
                 wire:navigate>
             {{ __('imagenes') }}
         </flux:navlist.group>

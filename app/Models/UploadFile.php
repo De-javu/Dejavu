@@ -43,7 +43,7 @@ class UploadFile extends Model
 
       public function documentarySerie() // Indica que el archivo de carga pertenece a una serie documental, es una relación de uno a muchos
     {
-        return $this->belongsTo(DocumentarySeries::class); // Indica que el archivo de carga pertenece a una serie documental
+        return $this->belongsTo(DocumentarySeries::class, 'documentary_series_id'); // Indica que el archivo de carga pertenece a una serie documental
     }
     public function parentSeries()// Indica que el archivo de carga pertenece a una serie documental padre, es una relación de uno a muchos
     {

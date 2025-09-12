@@ -1,3 +1,5 @@
+<x-layouts.app :title="__('Audios')">
 <h1>
-    Hola bebe soy audio
+    hola bebe soy audios
 </h1>
+</x-layouts.app>
