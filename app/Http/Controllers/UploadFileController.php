@@ -98,10 +98,8 @@ public function store(CargarArchivoRequest $request)
 
             // 6. Almacenar en base de datos
 
-   error_log("DEBUG: Intentando guardar archivo: " . json_encode($archivo->toArray()));
-// O usando Laravel:
             $archivo->save();
-            error_log("DEBUG: Archivo guardado correctamente: " . $archivo->original_name);
+
 
             // 7. Registrar en el array de archivos guardados para mostrar al usuario
             $archivosGuardados[] = [
@@ -133,9 +131,21 @@ public function store(CargarArchivoRequest $request)
     /**
      * Display the specified resource.
      */
-    public function show(UploadFile $uploadFile)
+    public function show($type)
     {
-        //
+        $archivos = UploadFile::where('extension', $type);
+
+        if (in_array($type, ['pdf'])) {
+                 $type ='archivo';
+        }elseif (in_array($type, ['mp3'])) {
+                 $type = 'audio';
+        }elseif (in_array($type, ['mp4'])) {
+                 $type = 'video';
+        }elseif (in_array($type, ['jpg','jpeg','tiff','tif'])) {
+                 $type = 'imagen';
+        }
+         return view("archivos.$type", compact('archivos'));
+
     }
 
     /**

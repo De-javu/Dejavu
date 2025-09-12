@@ -24,11 +24,15 @@ Route::middleware(['auth'])->group(function(){
    Route::resource('entidades', EntitiesController::class);
    Route::resource('series_documentales',DocumentarySeriesController::class);
    Route::resource('cargar_archivos',UploadFileController::class);
+
 });
 
 Route::middleware(['auth'])->group(function(){
    Route::post('sub_series/{serie}', [DocumentarySeriesController::class,'sub_carpeta'])->name('sub_carpeta');
    Route::put('sub_series/{serie}', [DocumentarySeriesController::class,'sub_editar'])->name('sub_editar');
+
+
+   Route::get('/archivos/{type}', [UploadFileController::class, 'show']);
 
 
 
