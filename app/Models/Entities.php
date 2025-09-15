@@ -28,6 +28,11 @@ class Entities extends Model
         return $this->hasMany(DocumentarySeries::class, 'entity_id'); // Indica que podremos acceder a conoltas de queries
     }
 
+    public function uploadFiles() // Indica que una entidad puede tener muchos archivos de carga, es una relación de uno a muchos
+    {
+        return $this->hasMany(UploadFile::class, 'entity_id'); // Indica que podremos acceder a conoltas de queries
+    }
+
 
 
 

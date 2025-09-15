@@ -81,7 +81,7 @@ public function store(CargarArchivoRequest $request)
             $archivo->display_name = $request->name;
             $archivo->extension = $file->getClientOriginalExtension();
             $archivo->mime_type = $file->getClientMimeType();
-            $archivo->folio = $request->folio ?? 0;
+            $archivo->folio = $request->folio ?? null;
             $archivo->size = $file->getSize();
             $archivo->start_date = $request->start_date;
             $archivo->end_date = $request->end_date;
@@ -134,10 +134,10 @@ public function store(CargarArchivoRequest $request)
     public function show($type)
     {
         $archivos = UploadFile::with('documentarySerie','parentSeries')
-                              ->where('extension', $type)
+                              ->whereRAW('LOWER(extension) = ?', [$type])
                               ->orderBy('id')
                               ->paginate(5);
-                              
+
 
         if (in_array($type, ['pdf'])) {
                  $type ='archivo';

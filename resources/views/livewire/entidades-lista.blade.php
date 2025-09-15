@@ -42,7 +42,7 @@
 
  </div>
  <div class="bg-dark overflow-x-auto">
-    <table class="min-w-full dark:bg-gray-900 shadow-md rounded-lg overflow-hidden" >
+    <table class="min-w-full dark:bg-gray-900 shadow-md rounded-r-lg overflow-hidden" >
         <thead class="dark:bg-gray-700 ">
             <tr>
                 <th class="py-3 px-6 text-left text-sm font-semibold">Usuarios Creador</th>
@@ -55,7 +55,7 @@
         </thead>
         <tbody class="bg-white dark:bg-gray-800">
              @foreach($entidades as $entidad)
-            <tr class="border-b border-dark-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+            <tr class="border-1 border-dark-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
             <td class="py-3 px-6">{{ $entidad->user->name}}</td>
             <td class="py-3 px-6">{{ $entidad->name }}</td>
             <td class="py-3 px-6">{{ $entidad->entity }}</td>
