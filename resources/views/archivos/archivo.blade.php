@@ -1,10 +1,43 @@
 <x-layouts.app :title="__('Documentos ')">
- <div class=" my-6 w-full space-y-6">
-    <h1 class="text-3xl font-bold text-center" >
+ <div class=" my-4 w-full space-y-4 flex  flex-col items-center  ">
+    <h1 class="text-3xl font-bold text-left" >
         {{('Lista de Documentos')}}
+
+
     </h1>
+            <form action="{{ route('archivos', ['type' => $originalType])}}"
+             method="get" class="flex items-center space-x-2 ">
+                <input
+                    type="text"
+                    name="buscar"
+                    placeholder="Buscar..."
+                    value="{{ request('buscar') }}"
+                    class="border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                <button
+                    type="submit"
+                    class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Buscar
+                </button>
+            </form>
 </div>
-<div class="overflow-x-auto">
+
+   <!-- Mostrar mensajes de búsqueda -->
+
+@if($buscar)
+      @if($conArchivos)
+          <div>
+            {{__('SE encontraron resultados para: ')}} "{{$buscar}}"
+          </div>
+      @else
+          <div>
+            {{ __('No se encontraron resultados para: ')}} "{{$buscar}}" . {{__('Intenta con otra consulta')}}
+          </div>
+      @endif
+@endif
+
+<hr>
+<div class="overflow-x-auto mt-6">
     <table class= "min-w-full dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
         <thead class= "dark:bg-gray-700">
             <tr>

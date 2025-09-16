@@ -118,8 +118,7 @@ public function store(CargarArchivoRequest $request)
         }
     }
 
-    // Antes del return final
-     error_log("DEBUG: Guardados: " . count($archivosGuardados) . ", Errores: " . count($archivosError));
+
 
     // Return Despues del foreach que envia a la vista dashboard los resultados
     return redirect()->route('dashboard')->with([
@@ -131,13 +130,25 @@ public function store(CargarArchivoRequest $request)
     /**
      * Display the specified resource.
      */
-    public function show($type)
+    public function show(Request $request, $type)
     {
+        $buscar = $request->input('buscar');
+        $originalType = $type; // Conservar el tipo original para la URL
+
         $archivos = UploadFile::with('documentarySerie','parentSeries')
                               ->whereRAW('LOWER(extension) = ?', [$type])
+                              ->when($buscar, function($query,$buscar){
+                        $query->where('original_name', 'like', "%{$buscar}%")
+                               ->orwhere('display_name', 'like', "%{$buscar}%");
+
+                            })
+
+
+
                               ->orderBy('id')
                               ->paginate(5);
 
+              $conArchivos = $archivos->count() > 0;
 
         if (in_array($type, ['pdf'])) {
                  $type ='archivo';
@@ -150,7 +161,7 @@ public function store(CargarArchivoRequest $request)
         }
 
 
-         return view("archivos.$type", compact('archivos'));
+         return view("archivos.$type", compact('archivos', 'buscar', 'originalType', 'conArchivos'));
 
     }
 
