@@ -15,7 +15,7 @@
     </flux:select>
 </div>
 
-    {{-- Selector de series --}}
+    {{-- Selector de series que no depende de otra --}}
 
 @if($entidad_id)
     <div class="w-full">

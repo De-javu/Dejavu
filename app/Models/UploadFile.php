@@ -52,7 +52,7 @@ class UploadFile extends Model
 
      public function entity() // Indica que el archivo de carga pertenece a una entidad, es una relación de uno a muchos
     {
-        return $this->belongsTo(Entities::class, ); // Indica que el archivo de carga pertenece a una entidad
+        return $this->belongsTo(Entities::class, 'entity_id'); // Indica que el archivo de carga pertenece a una entidad
     }
 }
 

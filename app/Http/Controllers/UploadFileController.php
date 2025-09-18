@@ -132,24 +132,30 @@ public function store(CargarArchivoRequest $request)
      */
     public function show(Request $request, $type)
     {
+
+        // llega el parametro de consta
         $buscar = $request->input('buscar');
         $originalType = $type; // Conservar el tipo original para la URL
 
-        $archivos = UploadFile::with('documentarySerie','parentSeries')
-                              ->whereRAW('LOWER(extension) = ?', [$type])
+           // Se realiza la consulta a la base de edatos.
+        $archivos = UploadFile::with('entity', 'documentarySerie','parentSeries')
+                              ->whereRAW('LOWER(extension) = ?', [strtolower($type)])
                               ->when($buscar, function($query,$buscar){
                         $query->where('original_name', 'like', "%{$buscar}%")
                                ->orwhere('display_name', 'like', "%{$buscar}%");
 
                             })
-
-
-
                               ->orderBy('id')
                               ->paginate(5);
 
+
+
+
+             // se encaraga e validar siarchivos , encconto algo
               $conArchivos = $archivos->count() > 0;
 
+
+        // Sistema de carga para las vistas
         if (in_array($type, ['pdf'])) {
                  $type ='archivo';
         }elseif (in_array($type, ['mp3'])) {
